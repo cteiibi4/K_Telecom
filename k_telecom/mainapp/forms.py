@@ -1,6 +1,8 @@
-from django.forms import ModelForm, ValidationError,CharField, ChoiceField
+from django.forms import ModelForm, ValidationError, CharField, ChoiceField
+from django.http import HttpResponse, HttpRequest, QueryDict
 import re
 from .models import TypeEquipment, Equipment
+
 
 class NewEquipmentForm(ModelForm):
     class Meta:
@@ -12,12 +14,10 @@ class NewEquipmentForm(ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 
-
-    def clean_serial_number(self):
+    def clean(self):
         data = self.cleaned_data['serial_number']
-        patter_obj = self.cleaned_data
-        print(patter_obj)
-        obj = TypeEquipment.objects.first()
+        patter_obj = self.cleaned_data['code_type']
+        obj = TypeEquipment.objects.get(name_type = patter_obj)
         pattern_base = getattr(obj, 'mask_serial_number')
         pattern_list = []
         print(pattern_base)
@@ -33,7 +33,8 @@ class NewEquipmentForm(ModelForm):
             elif i == 'N':
                 pattern_list.append(r'[0-9]')
         pattern = ''.join(pattern_list)
+        print(pattern)
         if re.search(pattern, data) is None:
             raise ValidationError('Неверный серийный номер')
 
-        return data
+

@@ -12,6 +12,7 @@
   </head>
   <body>
   <div class="container">
+      <H2>{{message|message}}</H2>
       <form class="form-group" action='{% url "main" %}' method="POST">
           <div class="form-group">
           {% csrf_token %}

@@ -7,12 +7,12 @@ from django.views.generic import ListView
 def main(request):
     title = 'Добавить устройство'
     type_equipments = TypeEquipment.objects.all()
-
     if request.method == 'POST':
         equipment_form = NewEquipmentForm(data=request.POST)
         if equipment_form.is_valid():
             equipment_form.save()
-            return render(request, 'mainapp/main.html')
+            content = {'title': title, 'message'}
+            return render(request, 'mainapp/main.html', content)
     else:
         equipment_form = NewEquipmentForm()
     content = {'title': title, 'equipment_form': equipment_form}

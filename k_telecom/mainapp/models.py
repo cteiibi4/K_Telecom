@@ -8,6 +8,9 @@ class TypeEquipment(models.Model):
     name_type = models.CharField(max_length=50)
     mask_serial_number = models.CharField(max_length=10)
 
+    def __str__(self):
+        return f'{self.name_type}'
+
 
 class Equipment(models.Model):
     code = models.IntegerField
