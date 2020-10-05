@@ -11,16 +11,9 @@
     <title>{{ title|title }}</title>
   </head>
   <body>
-  <div class="container">
-      <form class="form-group" action='{% url "main" %}' method="POST">
-          <div class="form-group">
-          {% csrf_token %}
-          {{equipment_form.as_p}}
-
-          <button type="submit" class="btn btn-primary">Добавить</button>
-          </div>
-      </form>
-  </div>
+    <div class="alert alert-primary" role="alert">
+        Номер успешно добавлен <a href="{% url "main" %}" class="alert-link">Вернуться</a>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

@@ -17,10 +17,9 @@ class NewEquipmentForm(ModelForm):
     def clean(self):
         data = self.cleaned_data['serial_number']
         patter_obj = self.cleaned_data['code_type']
-        obj = TypeEquipment.objects.get(name_type = patter_obj)
+        obj = TypeEquipment.objects.get(name_type=patter_obj)
         pattern_base = getattr(obj, 'mask_serial_number')
         pattern_list = []
-        print(pattern_base)
         for i in pattern_base:
             if i == 'Z':
                 pattern_list.append(r'[-_@]')
@@ -33,8 +32,8 @@ class NewEquipmentForm(ModelForm):
             elif i == 'N':
                 pattern_list.append(r'[0-9]')
         pattern = ''.join(pattern_list)
-        print(pattern)
         if re.search(pattern, data) is None:
             raise ValidationError('Неверный серийный номер')
-
+        if Equipment.objects.filter(serial_number=data):
+            raise ValidationError('Такой серийный номер уже есть')
 
